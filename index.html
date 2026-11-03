@@ -91,5 +91,19 @@ function submitQuiz(){let answers=[1,2,2],score=0,attempted=0;answers.forEach((a
 function upload(){let title=document.getElementById("upTitle").value.trim();if(!title){alert("Title लिखें।");return}let f=document.getElementById("upFile").files[0];let list=get("uploads");list.push({id:Date.now(),title,subject:document.getElementById("upSubject").value,desc:document.getElementById("upDesc").value,user:current,fileName:f?f.name:"",status:current==="Ghazib"?"approved":"pending"});set("uploads",list);document.getElementById("uploadMsg").innerHTML=`<div class="notice success">Submission saved in this browser. Status: ${current==="Ghazib"?"Approved":"Pending admin approval"}.</div>`;stats()}
 function moderate(id,status){let list=get("uploads");list=list.map(x=>x.id===id?{...x,status}:x);set("uploads",list);render("admin")}
 </script>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://hphvtvubyinvygsqjnah.supabase.co";
+
+const SUPABASE_ANON_KEY = "sb_publishable_s8sngHwKhAMpAXnzuqxqCg_9rxiqmhb";
+
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
+
+console.log("Supabase Connected!");
+</script>
 </body>
 </html>
