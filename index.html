@@ -83,7 +83,13 @@ function showLoginMessage(message,isError=false){
 }
 async function openPortal(user){
  const {data:profile,error}=await supabaseClient.from("profiles").select("full_name,role,approved").eq("id",user.id).single();
- if(error||!profile){await supabaseClient.auth.signOut();showLoginMessage("आपकी profile नहीं मिली। Admin से संपर्क करें।",true);return;}
+ if(error || !profile){
+  showLoginMessage(
+    "Profile Error: " + (error?.message || "Profile not found"),
+    true
+  );
+  return;
+ }
  if(!profile.approved){await supabaseClient.auth.signOut();showLoginMessage("आपका अकाउंट अभी Admin approval की प्रतीक्षा में है।",true);return;}
  current=profile.full_name||user.email||"Student";currentRole=profile.role||"student";
  document.getElementById("loginView").classList.add("hidden");
